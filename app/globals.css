@@ -19,3 +19,49 @@ body {
   background-size: 100%;
   -webkit-text-fill-color: transparent;
 }
+
+.shadow-button {
+  box-shadow: 4px 4px 19px 1px #144ee3;
+}
+
+.big-button-shadow {
+  box-shadow: 8px 4px 19px 1px #144ee3;
+}
+
+/* betweeen 402 and 556px */
+@media (min-width: 380px) and (max-width: 480px) {
+  .button-resize-corrector {
+    width: 60px;
+  }
+}
+
+
+.button-animate:before, .button-animate:after {
+	content: '';
+	position: absolute;
+	left: -2px;
+	top: -2px;
+	background: linear-gradient(45deg, #fb0094, #0000ff, #00ff00,#ffff00, #ff0000, #fb0094, 
+		#0000ff, #00ff00,#ffff00, #ff0000);
+	background-size: 400%;
+	width: calc(100% + 4px);
+	height: calc(100% + 4px);
+	z-index: -1;
+	animation: steam 20s ease infinite;
+}
+
+@keyframes steam {
+	0% {
+		background-position: 0 0;
+	}
+	50% {
+		background-position: 400% 0;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+/* .button-animate:after {
+	filter: blur(50px);
+} */
