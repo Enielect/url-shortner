@@ -18,7 +18,18 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <Image src='/cubes.svg' className='relative -z-10' layout='fill' alt='backgound-image' />
+        <Image
+          src='/cubes.svg'
+          className='relative -z-10'
+          layout='fill'
+          alt='backgound-image'
+        />
+        <Image
+          src='/swirl.svg'
+          className='relative -z-20'
+          layout='fill'
+          alt='backgound-image'
+        />
         {children}
       </body>
     </html>

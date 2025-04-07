@@ -31,7 +31,7 @@ body {
 /* betweeen 402 and 556px */
 @media (min-width: 380px) and (max-width: 480px) {
   .button-resize-corrector {
-    width: 60px;
+    /* width: 60px; */
   }
 }
 
