@@ -2,25 +2,39 @@
 import React, { useState } from 'react';
 import CopyButon from './ui/CopyButon';
 import useCopyText from '@/app/hooks/copy-text';
+import { useURLContext } from '@/app/context/URLProvider';
 
 const MobileTable = ({ className }: { className: string }) => {
+  const { urlState } = useURLContext();
+
   return (
     <div className={`text-white rounded-t-md ${className}`}>
       <header className='bg-[#181E29] text-sm capitalize rounded-t-md py-3 pl-4 mb-1 text-semibold'>
         Shortened link
       </header>
       <div className='space-y-1'>
-        {Array(4)
-          .fill(null)
-          .map((ele, i) => (
-            <Row key={i} />
-          ))}
+        {urlState.map((url, index) => (
+          <Row
+            key={index}
+            originalUrl={url.originalUrl}
+            shortenedUrl={url.shortenedUrl}
+            date={url.date}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
-const Row = () => {
+const Row = ({
+  originalUrl,
+  shortenedUrl,
+  date,
+}: {
+  originalUrl: string;
+  shortenedUrl: string;
+  date: string;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { textElementToCopy, copyButton, isClicked, setIsClicked } =
     useCopyText();
@@ -34,8 +48,12 @@ const Row = () => {
     >
       <div className='flex justify-between items-center'>
         <div className='space-x-3 flex items-center'>
+          <span className='text-sm hidden' ref={textElementToCopy}>
+            {shortenedUrl}
+          </span>
           <span className='text-sm' ref={textElementToCopy}>
-            shortened link...
+            {shortenedUrl.slice(0, 30)}
+            {shortenedUrl.length > 30 ? '...' : ''}
           </span>
           <CopyButon
             buttonRef={copyButton}
@@ -65,7 +83,7 @@ const Row = () => {
           isOpen ? 'h-0 overflow-hidden' : 'h-auto overflow-auto py-2'
         }`}
       >
-        <span className='flex items-center text-sm gap-3'>
+        <span className='flex flex-shrink items-center text-sm gap-3'>
           <span>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -83,9 +101,9 @@ const Row = () => {
               <path d='m10 15 5-3-5-3z' />
             </svg>
           </span>
-          <span>https://www.twitter.com/enilect</span>
+          <span>{originalUrl}</span>
         </span>
-        <div className='space-x-2 pt-3'>
+        <div className='flex gap-2 pt-3'>
           <button className='p-2 bg-[#181E29] border-[#353C4A] border rounded-full'>
             <svg
               width='17'

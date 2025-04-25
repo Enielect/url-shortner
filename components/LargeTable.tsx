@@ -2,7 +2,9 @@
 import React from 'react';
 import CopyButon from './ui/CopyButon';
 import useCopyText from '@/app/hooks/copy-text';
+import { useURLContext } from '@/app/context/URLProvider';
 const LargeTable = ({ className }: { className: string }) => {
+  const { urlState } = useURLContext();
   return (
     <div className={`text-white rounded-t-md overflow-hidden ${className}`}>
       <div className='overflow-x-auto'>
@@ -19,8 +21,14 @@ const LargeTable = ({ className }: { className: string }) => {
             </tr>
           </thead>
           <tbody className='text-sm  [&>tr]:mb-2'>
-            <TableRow />
-            <TableRow />
+            {urlState.map((url, index) => (
+              <TableRow
+                key={index}
+                originalUrl={url.originalUrl}
+                shortenedUrl={url.shortenedUrl}
+                date={url.date}
+              />
+            ))}
           </tbody>
         </table>
       </div>
@@ -28,14 +36,23 @@ const LargeTable = ({ className }: { className: string }) => {
   );
 };
 
-function TableRow() {
+function TableRow({
+  originalUrl,
+  shortenedUrl,
+  date,
+}: {
+  originalUrl: string;
+  shortenedUrl: string;
+  date: string;
+}) {
   const { textElementToCopy, copyButton, isClicked, setIsClicked } =
     useCopyText();
   return (
     <tr className='h-[3rem]  backdrop-blur-md  bg-[#181E29]/20'>
       <td className='pl-4 h-full'>
         <div className='flex items-center h-full gap-3'>
-          <span ref={textElementToCopy}>http://eniola.com</span>{' '}
+          <span ref={textElementToCopy}>{shortenedUrl.slice(0, 30)}
+            {shortenedUrl.length > 30 ? '...' : ''}</span>{' '}
           <CopyButon
             buttonRef={copyButton}
             onClick={() => setIsClicked(true)}
@@ -61,10 +78,10 @@ function TableRow() {
               <path d='m10 15 5-3-5-3z' />
             </svg>
           </span>
-          <span>https://www.twitter.com/enilect</span>
+          <span>{originalUrl}</span>
         </span>
       </td>
-      <td className='max-sm:pl-8 max-[802px]:pl-4'>Oct-10-2023</td>
+      <td className='max-sm:pl-8 max-[802px]:pl-4'>{date}</td>
       <td className='space-x-2 '>
         <button className='p-2 bg-[#181E29] border-[#353C4A] border rounded-full'>
           <svg

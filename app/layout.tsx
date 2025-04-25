@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Image from 'next/image';
+import URLProvider from './context/URLProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,7 +31,7 @@ export default function RootLayout({
           layout='fill'
           alt='backgound-image'
         />
-        {children}
+        <URLProvider>{children}</URLProvider>
       </body>
     </html>
   );
