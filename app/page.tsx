@@ -1,10 +1,10 @@
 'use client';
 import LargeTable from '@/components/LargeTable';
 import MobileTable from '@/components/MobileTable';
-import { ArrowRight, Link } from 'lucide-react';
+import { ArrowRight, Link, Loader } from 'lucide-react';
 import { useActionState, useEffect, useState, useTransition } from 'react';
 import { shorten } from './action/shorten';
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import { useURLContext } from './context/URLProvider';
 
 export default function Home() {
@@ -22,6 +22,8 @@ export default function Home() {
         date: new Date(date).toLocaleDateString(),
       };
       addUrlState(newUrlState);
+      setUrl('');
+      // setFocus(false);
     }
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
@@ -59,23 +61,12 @@ export default function Home() {
                 onBlur={() => setFocus(false)}
                 type='text'
                 style={{ border: 'none', outline: 'none' }}
-                className={`min-[556px]:w-full w-[calc(100%-7px)] md:max-w-[600px] text-white bg-[#181E29] py-2`}
+                className={`min-[556px]:w-full w-[calc(100%-7px)] md:max-w-[600px]  text-white bg-[#181E29] py-2`}
                 placeholder='Enter your long link here'
               />
             </div>
           </div>
-          <button
-            type='submit'
-            className='flex md:hidden relative justify-center shadow-button button-resize-corrector p-2 items-center  bg-[#144EE3] rounded-full'
-          >
-            <ArrowRight className='text-white' />
-          </button>
-          <button
-            type='submit'
-            className='md:flex text-white hidden  justify-center big-button-shadow items-center px-4 py-3 bg-[#144EE3] rounded-full'
-          >
-            Shorten Now
-          </button>
+          <SubmitButton />
         </form>
       </div>
 
@@ -85,5 +76,37 @@ export default function Home() {
         <LargeTable className='sm:block hidden' />
       </div>
     </div>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <>
+      <button
+        disabled={pending}
+        type='submit'
+        className={`flex md:hidden relative justify-center shadow-button button-resize-corrector p-2 items-center  bg-[#144EE3] rounded-full ${
+          pending && 'cursor-not-allowed'
+        }`}
+      >
+        {pending ? (
+          <Loader className='animate-spin' />
+        ) : (
+          <ArrowRight className='text-white' />
+        )}
+      </button>
+      <button
+        disabled={pending}
+        type='submit'
+        className={`md:flex text-white hidden  justify-center big-button-shadow items-center px-4 py-3 bg-[#144EE3] rounded-full ${
+          pending && 'cursor-not-allowed z-10'
+        }`}
+      >
+        Shorten Now {'  '}{' '}
+        {pending ? <Loader className='animate-spin ml-2' /> : ''}
+      </button>
+    </>
   );
 }
