@@ -51,7 +51,7 @@ const Row = ({
           <span className='text-sm hidden' ref={textElementToCopy}>
             {shortenedUrl}
           </span>
-          <span className='text-sm' ref={textElementToCopy}>
+          <span className='text-sm'>
             {shortenedUrl.slice(0, 30)}
             {shortenedUrl.length > 30 ? '...' : ''}
           </span>

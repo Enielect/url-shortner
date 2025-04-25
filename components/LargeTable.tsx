@@ -51,8 +51,13 @@ function TableRow({
     <tr className='h-[3rem]  backdrop-blur-md  bg-[#181E29]/20'>
       <td className='pl-4 h-full'>
         <div className='flex items-center h-full gap-3'>
-          <span ref={textElementToCopy}>{shortenedUrl.slice(0, 30)}
-            {shortenedUrl.length > 30 ? '...' : ''}</span>{' '}
+          <span className='text-sm hidden' ref={textElementToCopy}>
+            {shortenedUrl}
+          </span>
+          <span className='text-sm'>
+            {shortenedUrl.slice(0, 30)}
+            {shortenedUrl.length > 30 ? '...' : ''}
+          </span>
           <CopyButon
             buttonRef={copyButton}
             onClick={() => setIsClicked(true)}
