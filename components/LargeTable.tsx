@@ -3,6 +3,9 @@ import React from 'react';
 import CopyButon from './ui/CopyButon';
 import useCopyText from '@/app/hooks/copy-text';
 import { useURLContext } from '@/app/context/URLProvider';
+import { YoutubeIcon } from '@/lib/social.icons';
+import ShowIcon from './ShowIcon';
+import { identifySocialPlatform } from '@/lib/utils';
 const LargeTable = ({ className }: { className: string }) => {
   const { urlState } = useURLContext();
   return (
@@ -50,13 +53,13 @@ function TableRow({
   return (
     <tr className='h-[3rem]  backdrop-blur-md  bg-[#181E29]/20'>
       <td className='pl-4 h-full'>
-        <div className='flex items-center h-full gap-3'>
+        <div className='flex items-center h-full gap-3 mr-3'>
           <span className='text-sm hidden' ref={textElementToCopy}>
             {shortenedUrl}
           </span>
           <span className='text-sm'>
-            {shortenedUrl.slice(0, 30)}
-            {shortenedUrl.length > 30 ? '...' : ''}
+            {shortenedUrl.slice(0, 10)}
+            {shortenedUrl.length > 10 ? '...' : ''}
           </span>
           <CopyButon
             buttonRef={copyButton}
@@ -65,24 +68,10 @@ function TableRow({
         </div>
       </td>
       <td className='relative max-[802px]:pl-4'>
-        <span className='flex items-center gap-3'>
-          <span>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              width='24'
-              height='24'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              // class='lucide lucide-youtube-icon lucide-youtube'
-            >
-              <path d='M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17' />
-              <path d='m10 15 5-3-5-3z' />
-            </svg>
-          </span>
+        <span className='flex items-center gap-3 mr-4'>
+          {/* <span> */}
+          <ShowIcon socialName={identifySocialPlatform(originalUrl)} />
+          {/* </span> */}
           <span>{originalUrl}</span>
         </span>
       </td>
