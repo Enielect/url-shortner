@@ -1,5 +1,5 @@
 import { baseUrl } from '@/lib/baseUrl';
-import { checkIfUrlExists, isValidURL } from '@/lib/validUrl';
+import { /* checkIfUrlExists,*/ isValidURL } from '@/lib/validUrl';
 import React from 'react';
 import { redirect } from 'next/navigation';
 import RedirectComponent from './RedirectComponent';
@@ -21,9 +21,10 @@ async function getSnipper(snipper_id: string) {
     console.log(url, 'data');
 
     try {
-      const isUrl = await checkIfUrlExists(url);
+      //gettin issues with auth protected sites
+      // const isUrl = await checkIfUrlExists(url);
 
-      if (isValidURL(url) && isUrl) {
+      if (isValidURL(url)) {
         return url;
       }
     } catch (err: any) {

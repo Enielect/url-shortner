@@ -21,10 +21,20 @@ type URLContextType = {
 const URLContext = createContext<URLContextType>(contextState);
 
 const URLProvider = ({ children }: { children: React.ReactNode }) => {
-  const [urlState, setUrlState] = useState<URLState[]>([]);
+  const initialUrlState = localStorage.getItem('urlState');
+  console.log(initialUrlState, 'initialUrlState');
+  const [urlState, setUrlState] = useState<URLState[]>(
+    JSON.parse(initialUrlState || '[]')
+  );
 
   const addUrlState = (newUrlState: URLState) => {
-    setUrlState((prevState) => [...prevState, newUrlState]);
+    setUrlState((prevState) => {
+      localStorage.setItem(
+        'urlState',
+        JSON.stringify([...prevState, newUrlState])
+      );
+      return [...prevState, newUrlState];
+    });
   };
 
   return (
