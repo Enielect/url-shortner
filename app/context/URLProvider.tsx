@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 // Create a context for the URL state
 
@@ -21,11 +21,15 @@ type URLContextType = {
 const URLContext = createContext<URLContextType>(contextState);
 
 const URLProvider = ({ children }: { children: React.ReactNode }) => {
-  const initialUrlState = localStorage.getItem('urlState');
-  console.log(initialUrlState, 'initialUrlState');
-  const [urlState, setUrlState] = useState<URLState[]>(
-    JSON.parse(initialUrlState || '[]')
-  );
+  // const initialUrlState = localStorage.getItem('urlState'); // I got a build error here because localStorage is not available on the server (funny how this is supposed to be a client component)
+  const [urlState, setUrlState] = useState<URLState[]>([]);
+
+  useEffect(() => {
+    const storedUrlState = localStorage.getItem('urlState');
+    if (storedUrlState) {
+      setUrlState(JSON.parse(storedUrlState));
+    }
+  }, []);
 
   const addUrlState = (newUrlState: URLState) => {
     setUrlState((prevState) => {

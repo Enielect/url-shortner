@@ -1,5 +1,5 @@
 import DisplayLink from "@/components/DisplayLink";
-import React, { useEffect } from "react";
+import React from "react";
 
 const DetailsPage = () => {
   return (

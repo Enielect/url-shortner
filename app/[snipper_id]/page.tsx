@@ -9,7 +9,6 @@ async function getSnipper(snipper_id: string) {
     const res = await fetch(`${baseUrl}/api/expand/${snipper_id}`, {
       headers: {
         'Content-Type': 'application/json',
-        // Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
 

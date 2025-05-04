@@ -2,7 +2,7 @@
 import LargeTable from '@/components/LargeTable';
 import MobileTable from '@/components/MobileTable';
 import { ArrowRight, Link, Loader } from 'lucide-react';
-import { useActionState, useEffect, useState, useTransition } from 'react';
+import {  useEffect, useState } from 'react';
 import { shorten } from './action/shorten';
 import { useFormState, useFormStatus } from 'react-dom';
 import { useURLContext } from './context/URLProvider';
